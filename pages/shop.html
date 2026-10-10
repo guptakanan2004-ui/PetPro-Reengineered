@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>petsMania - Ultimate Mart for Pets</title>
+<link rel="stylesheet" href="../css/style.css">
+
+<style>
+.header .logo, .header .logo i { color:#267a32 !important; }
+.header .logo span, .footer-content h3 span { color:#e67e22 !important; }
+
+.shop-banner {
+    background:#f0f7ed;
+    text-align:center;
+    padding:40px 20px;
+}
+.shop-banner h1 { font-size:48px; font-weight:bold; }
+.shop-banner h1 .pet { color:#267a32; }
+.shop-banner h1 .pro { color:#e67e22; }
+.shop-banner p { font-size:18px; color:#555; }
+
+.shop-products { padding:35px 5%; }
+.shop-categories { width:90%; max-width:1100px; margin:25px auto; }
+.shop-categories h2, .product-category h2 {
+    text-align:center;
+    font-size:30px;
+    margin:20px 0 30px;
+}
+.category-list, .product-container {
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+.category-card {
+    box-sizing:border-box;
+    width:100%;
+    padding:25px 30px;
+    background:#f0f7ed;
+    border:1px solid #dce8d8;
+    border-radius:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+.category-card:hover { background:#e0efda; transform:translateY(-2px); }
+.category-card h3 { font-size:24px; color:#267a32; margin:0 0 10px; }
+.category-card p { font-size:17px; color:#555; margin:0; }
+
+.product-category { max-width:1050px; margin:auto; }
+.product-card {
+    display:grid;
+    grid-template-columns:150px minmax(0,1fr) 190px;
+    align-items:center;
+    gap:20px;
+    padding:18px;
+    border:1px solid #e0e7df;
+    border-radius:12px;
+    box-shadow:0 4px 12px #00000012;
+    background:white;
+}
+.product-card img { width:140px; height:140px; object-fit:contain; }
+.product-info h3 { font-size:20px; margin:0 0 10px; color:#222; }
+.product-info p { font-size:15px; line-height:1.5; color:#666; margin:0; }
+.product-actions { text-align:center; }
+.price { display:block; color:#267a32; font-size:23px; font-weight:bold; margin-bottom:12px; }
+.quantity-control {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:12px;
+}
+.quantity-control button {
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:6px;
+    background:#267a32;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+}
+.quantity-control button:hover, .shop-btn:hover { background:#e67e22; }
+.quantity-control span { min-width:20px; font-weight:bold; }
+.shop-btn {
+    background:#267a32;
+    color:white;
+    border:0;
+    border-radius:6px;
+    padding:12px 16px;
+    cursor:pointer;
+    font-size:15px;
+}
+.product-actions .shop-btn { width:100%; }
+.back-btn { margin:0 0 15px; }
+.footer-content h3 { color:#267a32; }
+
+@media(max-width:650px) {
+    .shop-banner h1 { font-size:32px; }
+    .shop-products { padding:25px 12px; }
+    .shop-categories { width:100%; }
+    .category-card { padding:22px; }
+    .category-card h3 { font-size:21px; }
+    .product-card { grid-template-columns:85px minmax(0,1fr); gap:12px; padding:12px; }
+    .product-card img { width:80px; height:95px; }
+    .product-info h3 { font-size:17px; }
+    .product-info p { font-size:13px; }
+    .product-actions { grid-column:1/-1; border-top:1px solid #eee; padding-top:12px; }
+    .product-actions .shop-btn { max-width:250px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="../index.html" class="logo">
+        <i class="fa-solid fa-paw"></i>Pet<span>Pro</span>
+    </a>
+    <nav class="navbar">
+        <a href="../index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+    </nav>
+    <i id="menu-btn" class="fas fa-bars"></i>
+</header>
+
+<section class="shop-banner">
+    <h1><span class="pet">Pet</span><span class="pro">Pro</span> Shop</h1>
+    <p>Everything Your Furry Friend Needs!</p>
+</section>
+
+<section class="shop-products">
+    <div class="shop-categories" id="shopCategories">
+        <h2>Shop by Category</h2>
+        <div class="category-list">
+            <div class="category-card" onclick="showCategory('food')">
+                <h3>🐶 Dog Food &amp; Treats</h3>
+                <p>Food, biscuits and treats for your dog.</p>
+            </div>
+            <div class="category-card" onclick="showCategory('collars')">
+                <h3>🐕 Collars &amp; Accessories</h3>
+                <p>Collars and daily accessories.</p>
+            </div>
+            <div class="category-card" onclick="showCategory('toys')">
+                <h3>🎾 Dog Toys</h3>
+                <p>Balls, chew toys and ropes.</p>
+            </div>
+            <div class="category-card" onclick="showCategory('beds')">
+                <h3>🛏️ Beds &amp; Grooming</h3>
+                <p>Beds, brushes and shampoo.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="food" class="product-category" style="display:none">
+        <h2>Dog Food &amp; Treats</h2>
+        <button class="shop-btn back-btn" onclick="backToCategories()">← Back to Categories</button>
+        <div class="product-container"></div>
+    </div>
+
+    <div id="collars" class="product-category" style="display:none">
+        <h2>Collars &amp; Accessories</h2>
+        <button class="shop-btn back-btn" onclick="backToCategories()">← Back to Categories</button>
+        <div class="product-container"></div>
+    </div>
+
+    <div id="toys" class="product-category" style="display:none">
+        <h2>Dog Toys</h2>
+        <button class="shop-btn back-btn" onclick="backToCategories()">← Back to Categories</button>
+        <div class="product-container"></div>
+    </div>
+
+    <div id="beds" class="product-category" style="display:none">
+        <h2>Beds &amp; Grooming Products</h2>
+        <button class="shop-btn back-btn" onclick="backToCategories()">← Back to Categories</button>
+        <div class="product-container"></div>
+    </div>
+</section>
+
+<section class="footer">
+    <div class="footer-content">
+        <h3><i class="fa-solid fa-paw"></i>Pet<span>Pro</span></h3>
+        <p>Your pet's happiness and comfort matter to us.</p>
+    </div>
+</section>
+
+<div class="footer-bottom">
+    <p>&copy; 2026 PetPro. All Rights Reserved.</p>
+</div>
+
+<script src="https://kit.fontawesome.com/cb8535f973.js" crossorigin="anonymous"></script>
+
+<script>
+const products = {
+    food: [
+        ["Royal Canin Puppy Food","dogfood1.jpeg","Nutritious food for your dog's daily needs.",599],
+        ["Natural Dog Chew Treats","dogfood2.jpeg","Food specially made for growing puppies.",449],
+        ["Premium Dog Chew Bones","dogfood3.jpg","A tasty meal option for your dog.",199],
+        ["Goodies Energy Treats","dogfood4.jpeg","A crunchy treat for your furry friend.",149],
+        ["Pedigree Tasty Bites","dogfood5.jpeg","Reward your dog during training.",249]
+    ],
+    collars: [
+        ["Dog Collar","collar1.jpeg","Comfortable collar for everyday walks.",199],
+        ["Adjustable Dog Collar","collar2.jpeg","A comfortable collar for everyday use.",249],
+        ["Nylon Dog Collar","collar3.jpeg","Lightweight and durable for daily walks.",299],
+        ["Stylish Dog Collar","collar4.jpeg","A stylish accessory for your furry friend.",349],
+        ["Padded Dog Collar","collar5.jpg","Extra comfort for your dog's neck.",399],
+        ["Premium Dog Collar","collar6.jpeg","A premium-looking collar for daily walks.",499]
+    ],
+    toys: [
+        ["Dog Toy","toy1.jpg","Fun toys to keep your pet active.",249],
+        ["Dog Chew Toy","toy2.jpeg","A fun chew toy for your furry friend.",199],
+        ["Dog Ball Toy","toy3.jpeg","A playful ball for daily fun and exercise.",149],
+        ["Rope Dog Toy","toy4.jpeg","A rope toy for interactive playtime.",249],
+        ["Squeaky Dog Toy","toy5.jpeg","A squeaky toy to keep your dog entertained.",299]
+    ],
+    beds: [
+        ["Comfortable Dog Bed","bed1.jpg","A cosy place for your dog to rest.",999],
+        ["Soft Dog Bed","bed2.jpeg","A soft and cosy bed for your dog.",799],
+        ["Round Dog Bed","bed3.jpeg","A comfortable round bed for relaxing.",999],
+        ["Premium Dog Bed","bed4.jpg","A spacious bed for extra comfort.",1299],
+        ["Grooming Brush","grooming1.jpeg","Keep your dog's coat clean and neat.",299],
+        ["Dog Shampoo","grooming2.jpeg","Gentle shampoo for your dog's coat.",299],
+        ["Grooming Brush","grooming3.jpeg","Help keep your dog's coat neat and clean.",249],
+        ["Dog Comb","grooming4.jpg","A handy comb for everyday grooming.",149]
+    ]
+};
+
+function addToCart(name, price, qty) {
+    if (qty <= 0) {
+        alert("Please select at least 1 product!");
+        return;
+    }
+    alert(name + "\nQuantity: " + qty +
+        "\nTotal: ₹" + (price * qty) +
+        "\n\nDemo only - no real order placed.");
+}
+
+Object.entries(products).forEach(([category, items]) => {
+    const container = document.querySelector("#" + category + " .product-container");
+
+    items.forEach(([name, image, description, price]) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        const img = document.createElement("img");
+        img.src = "../assets/" + image;
+        img.alt = name;
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+        const title = document.createElement("h3");
+        title.textContent = name;
+        const desc = document.createElement("p");
+        desc.textContent = description;
+        info.append(title, desc);
+
+        const actions = document.createElement("div");
+        actions.className = "product-actions";
+
+        const priceEl = document.createElement("span");
+        priceEl.className = "price";
+        priceEl.textContent = "₹" + price.toLocaleString("en-IN");
+
+        const controls = document.createElement("div");
+        controls.className = "quantity-control";
+
+        const minus = document.createElement("button");
+        minus.type = "button";
+        minus.textContent = "−";
+
+        const count = document.createElement("span");
+        count.textContent = "0";
+        let qty = 0;
+
+        const plus = document.createElement("button");
+        plus.type = "button";
+        plus.textContent = "+";
+
+        minus.onclick = () => {
+            if (qty > 0) count.textContent = --qty;
+        };
+        plus.onclick = () => count.textContent = ++qty;
+
+        controls.append(minus, count, plus);
+
+        const cart = document.createElement("button");
+        cart.className = "shop-btn";
+        cart.textContent = "Add to Cart";
+        cart.onclick = () => addToCart(name, price, qty);
+
+        actions.append(priceEl, controls, cart);
+        card.append(img, info, actions);
+        container.appendChild(card);
+    });
+});
+
+function showCategory(category) {
+    document.getElementById("shopCategories").style.display = "none";
+    document.querySelectorAll(".product-category").forEach(s => s.style.display = "none");
+    document.getElementById(category).style.display = "block";
+    window.scrollTo(0, 0);
+}
+
+function backToCategories() {
+    document.querySelectorAll(".product-category").forEach(s => s.style.display = "none");
+    document.getElementById("shopCategories").style.display = "block";
+    window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
+```
